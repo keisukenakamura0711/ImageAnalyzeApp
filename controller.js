@@ -380,6 +380,10 @@ function makeBinCount(binArr, histgramIndex, binNumber) {
 
 function isOperationTypeColorPix() {
     let value = document.getElementById("operationTypeId").operationType.value;
-    if (value == "colorPix") return true;
-    else return false;
+    if (value == "colorPix") {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
