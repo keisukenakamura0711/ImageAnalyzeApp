@@ -78,6 +78,12 @@ function analysisHSV() {
     let gDst = gCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
     let bDst = bCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
 
+    for (let i = 0; i < toneArrR.length; ++i) {
+        compArr[COLOR.R][i] = 0;
+        compArr[COLOR.G][i] = 0;
+        compArr[COLOR.B][i] = 0;
+    }
+
     let H = 0;
     let S = 0;
     let V = 0;
@@ -156,6 +162,12 @@ function analysisYUV() {
     let rDst = rCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
     let gDst = gCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
     let bDst = bCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
+
+    for (let i = 0; i < toneArrR.length; ++i) {
+        compArr[COLOR.R][i] = 0;
+        compArr[COLOR.G][i] = 0;
+        compArr[COLOR.B][i] = 0;
+    }
 
     let Y = 0;
     let U = 0;
