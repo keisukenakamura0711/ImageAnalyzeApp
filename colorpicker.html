@@ -12,29 +12,31 @@
 
 <body>
     <!-- 操作パネル -->
-    <form id="operationTypeId">
+    <form id="operationTypeId" name="formRadioButtons">
         <input type="radio" disabled id="colorPix" name="operationType" value="colorPix" checked="checked"
             onclick="clearSelectRange()">
         <label for="colorPix">カラーピッカ</label>
         <input type="radio" disabled id="selectRect" name="operationType" value="selectRect"
-            onclick="clearPixelColor()">
+            onclick="clickSelectRange()">
         <label for="selectRect">範囲指定</label><BR>
     </form>
 
-    カラーフォーマット
-    <select id="colorFormat" disabled>
-        <option value="RGB">RGB</option>
-        <option value="HSV">HSV</option>
-        <option value="YUV">YUV</option>
-    </select>
-    階調化
-    <select id="binNumberId" disabled>
-        <option value="256">なし</option>
-        <option value="32">32階調</option>
-        <option value="16">16階調</option>
-        <option value="8">8階調</option>
-        <option value="4">4階調</option>
-    </select><BR>
+    <form name="formComboboxes">
+        カラーフォーマット
+        <select id="colorFormat" disabled>
+            <option value="RGB">RGB</option>
+            <option value="HSV">HSV</option>
+            <option value="YUV">YUV</option>
+        </select>
+        階調化
+        <select id="binNumberId" disabled onChange="selectBinNumber()">
+            <option value="256">なし</option>
+            <option value="32">32階調</option>
+            <option value="16">16階調</option>
+            <option value="8">8階調</option>
+            <option value="4">4階調</option>
+        </select><BR>
+    </form>
     選択ピクセル色<br>
     <span id="pixelColor"></span><br>
     座標<br>
