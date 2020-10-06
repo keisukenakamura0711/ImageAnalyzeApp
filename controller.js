@@ -17,6 +17,7 @@ function analysisImg() {
         default:
     }
     drawHistgram();
+    IsDrawAnalysis = true;
 }
 
 function analysisRGB() {

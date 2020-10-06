@@ -1,3 +1,11 @@
+window.onload = () => {
+    const globalAlpha = document.getElementById("globalAlpha");
+    const globalAlphaValue = document.getElementById("globalAlphaValue");
+    baseImg = new Image();
+
+    globalAlphaValue.innerHTML = globalAlpha.value;
+}
+
 function clearSelectRect() {
     let cvs = document.getElementById('baseImgOverlayer');
     let ctx = cvs.getContext('2d');
@@ -19,24 +27,50 @@ function clearSelectRange() {
     clearSelectRect();
 }
 
+function changeGlobalAlpha() {
+    const globalAlpha = document.getElementById("globalAlpha");
+    const globalAlphaValue = document.getElementById("globalAlphaValue");
+
+    globalAlphaValue.innerHTML = globalAlpha.value;
+}
+
+function redrawGlobalAlpha() {
+    const globalAlpha = document.getElementById("globalAlpha");
+    const cvs = document.getElementById("baseImg");
+    let ctx = cvs.getContext("2d");
+
+    if (fileSelect.files.length == 0) {
+        return;
+    }
+
+    ctx.clearRect(0, 0, cvs.clientWidth, cvs.clientHeight);
+    ctx.globalAlpha = globalAlpha.value;
+    ctx.drawImage(baseImg, 0, 0, cvs.clientWidth, cvs.clientHeight);
+    imageData = ctx.getImageData(0, 0, IMAGE_WIDHT, IMAGE_HEIGHT);
+    if (IsDrawAnalysis) {
+        analysisImg();
+    }
+}
+
 function readImg() {
 
     const reader = new FileReader();
     const fileSelect = document.getElementById("fileSelect");
+    const globalAlpha = document.getElementById("globalAlpha");
     const cvs = document.getElementById("baseImg");
     let ctx = cvs.getContext("2d");
-    let img = new Image();
 
     if (fileSelect.files.length == 0) {
         return;
     }
     reader.onloadend = () => {
-        img.onload = () => {
-            ctx.drawImage(img, 0, 0, cvs.clientWidth, cvs.clientHeight);
+        baseImg.onload = () => {
+            ctx.clearRect(0, 0, cvs.clientWidth, cvs.clientHeight);
+            ctx.globalAlpha = globalAlpha.value;
+            ctx.drawImage(baseImg, 0, 0, cvs.clientWidth, cvs.clientHeight);
             imageData = ctx.getImageData(0, 0, IMAGE_WIDHT, IMAGE_HEIGHT);
-
         }
-        img.src = reader.result;
+        baseImg.src = reader.result;
     }
     reader.readAsDataURL(fileSelect.files[0]);
 
@@ -45,6 +79,8 @@ function readImg() {
     document.getElementById("colorPix").disabled = "";
     document.getElementById("analysisImg").disabled = "";
     document.getElementById("selectRect").disabled = "";
+
+    IsDrawAnalysis = false;
 }
 
 function clickBaseImg(event) {

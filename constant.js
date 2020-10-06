@@ -22,3 +22,5 @@ let toneArrB = new Array(COLOR_RANGE);
 
 let compArr = new Array(toneArrR, toneArrG, toneArrB);
 let imageData;
+let baseImg;
+let IsDrawAnalysis = false;
