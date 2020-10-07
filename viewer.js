@@ -30,14 +30,10 @@ function clearSelectRange() {
 function changeGlobalAlpha() {
     const globalAlpha = document.getElementById("globalAlpha");
     const globalAlphaValue = document.getElementById("globalAlphaValue");
-
-    globalAlphaValue.innerHTML = globalAlpha.value;
-}
-
-function redrawGlobalAlpha() {
-    const globalAlpha = document.getElementById("globalAlpha");
     const cvs = document.getElementById("baseImg");
     let ctx = cvs.getContext("2d");
+
+    globalAlphaValue.innerHTML = globalAlpha.value;
 
     if (fileSelect.files.length == 0) {
         return;
@@ -47,9 +43,7 @@ function redrawGlobalAlpha() {
     ctx.globalAlpha = globalAlpha.value;
     ctx.drawImage(baseImg, 0, 0, cvs.clientWidth, cvs.clientHeight);
     imageData = ctx.getImageData(0, 0, IMAGE_WIDHT, IMAGE_HEIGHT);
-    if (IsDrawAnalysis) {
-        analysisImg();
-    }
+
 }
 
 function readImg() {
@@ -79,8 +73,6 @@ function readImg() {
     document.getElementById("colorPix").disabled = "";
     document.getElementById("analysisImg").disabled = "";
     document.getElementById("selectRect").disabled = "";
-
-    IsDrawAnalysis = false;
 }
 
 function clickBaseImg(event) {
