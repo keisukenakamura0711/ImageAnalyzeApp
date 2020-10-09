@@ -73,6 +73,7 @@ function readImg() {
     document.getElementById("analysisImg").disabled = false;
     document.getElementById("sameScaleImg").disabled = false;
     document.getElementById("selectRect").disabled = false;
+
 }
 
 function sameScaleImg() {
