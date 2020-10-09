@@ -24,6 +24,7 @@ function clearPixelColor() {
 
 function clearSelectRange() {
     selectRangeState = SELECT_RANGE_STATE.NONE;
+    document.getElementById("magnScaleImg").disabled = true;
     clearSelectRect();
 }
 
@@ -42,12 +43,10 @@ function changeGlobalAlpha() {
     ctx.clearRect(0, 0, cvs.clientWidth, cvs.clientHeight);
     ctx.globalAlpha = globalAlpha.value;
     ctx.drawImage(baseImg, 0, 0, cvs.clientWidth, cvs.clientHeight);
-    imageData = ctx.getImageData(0, 0, IMAGE_WIDHT, IMAGE_HEIGHT);
-
+    imageData = ctx.getImageData(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
 }
 
 function readImg() {
-
     const reader = new FileReader();
     const fileSelect = document.getElementById("fileSelect");
     const globalAlpha = document.getElementById("globalAlpha");
@@ -62,17 +61,55 @@ function readImg() {
             ctx.clearRect(0, 0, cvs.clientWidth, cvs.clientHeight);
             ctx.globalAlpha = globalAlpha.value;
             ctx.drawImage(baseImg, 0, 0, cvs.clientWidth, cvs.clientHeight);
-            imageData = ctx.getImageData(0, 0, IMAGE_WIDHT, IMAGE_HEIGHT);
+            imageData = ctx.getImageData(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         }
         baseImg.src = reader.result;
     }
     reader.readAsDataURL(fileSelect.files[0]);
 
-    document.getElementById("colorFormat").disabled = "";
-    document.getElementById("binNumberId").disabled = "";
-    document.getElementById("colorPix").disabled = "";
-    document.getElementById("analysisImg").disabled = "";
-    document.getElementById("selectRect").disabled = "";
+    document.getElementById("colorFormat").disabled = false;
+    document.getElementById("binNumberId").disabled = false;
+    document.getElementById("colorPix").disabled = false;
+    document.getElementById("analysisImg").disabled = false;
+    document.getElementById("sameScaleImg").disabled = false;
+    document.getElementById("selectRect").disabled = false;
+}
+
+function sameScaleImg() {
+    openImageWindow(0, 0, baseImg.width, baseImg.height, 0, 0, baseImg.width, baseImg.height);
+}
+
+function magnScaleImg() {
+    sx = (Math.min(firstPosX, secondPosX) / IMAGE_WIDTH) * baseImg.width;
+    sy = (Math.min(firstPosY, secondPosY) / IMAGE_HEIGHT) * baseImg.height;
+    sw = (Math.abs(secondPosX - firstPosX) / IMAGE_WIDTH) * baseImg.width;
+    sh = (Math.abs(secondPosY - firstPosY) / IMAGE_HEIGHT) * baseImg.height;
+    dw = Math.abs(secondPosX - firstPosX) * 4;
+    dh = Math.abs(secondPosY - firstPosY) * 4;
+    openImageWindow(sx, sy, sw, sh, 0, 0, dw, dh);
+}
+
+function openImageWindow(sx, sy, sw, sh, dx, dy, dw, dh) {
+    let pop_win = window.open(
+        "",
+        "_blank",
+        "width=" + (dw + 1) + ",height=" + (dh + 1) + ",scrollbars=no,resizable=yes"
+    );
+    if (pop_win) {
+        pop_win.window.document.open();
+        pop_win.window.document.write(
+            '<html>'
+            + '<head><title>"Image"</title></head>'
+            + '<body style="margin:0;padding:0;border:0;">'
+            + '<canvas id="otherImg" width="' + dw + '" height="' + dh + '"/>'
+            + '</body>'
+            + '</html>'
+        );
+        const cvs = pop_win.window.document.getElementById("otherImg");
+        let ctx = cvs.getContext("2d");
+        ctx.drawImage(baseImg, sx, sy, sw, sh, dx, dy, dw, dh);
+        pop_win.window.document.close();
+    }
 }
 
 function clickBaseImg(event) {
@@ -106,11 +143,13 @@ function clickBaseImg(event) {
     } else {
         if (selectRangeState == SELECT_RANGE_STATE.SELECTING) {
             selectRangeState = SELECT_RANGE_STATE.SELECTED;
+            document.getElementById("magnScaleImg").disabled = false;
         }
         else {
             firstPosX = event.offsetX;
             firstPosY = event.offsetY;
             selectRangeState = SELECT_RANGE_STATE.SELECTING;
+            document.getElementById("magnScaleImg").disabled = true;
         }
     }
 }
@@ -161,7 +200,7 @@ function drawHistgram() {
 
 function drawCompHistgram(ctx, binArr, binNumber) {
     let binHeight;
-    let binWidth = IMAGE_WIDHT / binNumber;
+    let binWidth = IMAGE_WIDTH / binNumber;
     let pixelTotalRect;
     let operationType = document.getElementById("operationTypeId").operationType.value;
 

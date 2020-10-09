@@ -27,9 +27,9 @@ function analysisRGB() {
     let rCtx = rCvs.getContext("2d");
     let gCtx = gCvs.getContext("2d");
     let bCtx = bCvs.getContext("2d");
-    let rDst = rCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
-    let gDst = gCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
-    let bDst = bCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
+    let rDst = rCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let gDst = gCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let bDst = bCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
 
     for (let i = 0; i < toneArrR.length; ++i) {
         compArr[COLOR.R][i] = 0;
@@ -74,9 +74,9 @@ function analysisHSV() {
     let rCtx = rCvs.getContext("2d");
     let gCtx = gCvs.getContext("2d");
     let bCtx = bCvs.getContext("2d");
-    let rDst = rCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
-    let gDst = gCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
-    let bDst = bCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
+    let rDst = rCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let gDst = gCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let bDst = bCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
 
     for (let i = 0; i < toneArrR.length; ++i) {
         compArr[COLOR.R][i] = 0;
@@ -159,9 +159,9 @@ function analysisYUV() {
     let rCtx = rCvs.getContext("2d");
     let gCtx = gCvs.getContext("2d");
     let bCtx = bCvs.getContext("2d");
-    let rDst = rCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
-    let gDst = gCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
-    let bDst = bCtx.createImageData(IMAGE_WIDHT, IMAGE_HEIGHT);
+    let rDst = rCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let gDst = gCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
+    let bDst = bCtx.createImageData(IMAGE_WIDTH, IMAGE_HEIGHT);
 
     for (let i = 0; i < toneArrR.length; ++i) {
         compArr[COLOR.R][i] = 0;
@@ -230,8 +230,8 @@ function analysisYUV() {
 }
 
 function calcHistogram(count) {
-    cmpValueX = count / 4 % IMAGE_WIDHT;
-    cmpValueY = Math.floor(count / 4 / IMAGE_WIDHT);
+    cmpValueX = count / 4 % IMAGE_WIDTH;
+    cmpValueY = Math.floor(count / 4 / IMAGE_WIDTH);
 
     if (((firstPosX <= cmpValueX && cmpValueX <= secondPosX) || (secondPosX <= cmpValueX && cmpValueX <= firstPosX)) &&
         ((firstPosY <= cmpValueY && cmpValueY <= secondPosY) || (secondPosY <= cmpValueY && cmpValueY <= firstPosY))) {
