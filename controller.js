@@ -17,6 +17,8 @@ function analysisImg() {
         default:
     }
     drawHistgram();
+
+    document.getElementById("saveImg").disabled = false;
 }
 
 function analysisRGB() {

@@ -73,8 +73,6 @@ function readImg() {
     document.getElementById("analysisImg").disabled = false;
     document.getElementById("sameScaleImg").disabled = false;
     document.getElementById("selectRect").disabled = false;
-
-    
 }
 
 function sameScaleImg() {
@@ -89,6 +87,36 @@ function magnScaleImg() {
     dw = Math.abs(secondPosX - firstPosX) * 4;
     dh = Math.abs(secondPosY - firstPosY) * 4;
     openImageWindow(sx, sy, sw, sh, 0, 0, dw, dh);
+}
+
+function saveImg() {
+    const saveImg = document.getElementById("saveImg");
+    const basecvs = document.getElementById("baseImg");
+    const colorComponent1cvs = document.getElementById("colorComponent1Img");
+    const colorComponent2cvs = document.getElementById("colorComponent2Img");
+    const colorComponent3cvs = document.getElementById("colorComponent3Img");
+    const histgram1cvs = document.getElementById("histgram1Img");
+    const histgram2cvs = document.getElementById("histgram2Img");
+    const histgram3cvs = document.getElementById("histgram3Img");
+    let cvs = document.createElement('canvas');
+    let ctx = cvs.getContext('2d');
+    let a = document.createElement('a');
+
+    cvs.width = IMAGE_WIDTH * 3 + 20;
+    cvs.height = IMAGE_HEIGHT * 3 + 20;
+    ctx.fillStyle = "rgb(255,255,255)";
+    ctx.fillRect(0, 0, cvs.width, cvs.height);
+    ctx.drawImage(basecvs, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+    ctx.drawImage(colorComponent1cvs, 0, IMAGE_HEIGHT + 10, IMAGE_WIDTH, IMAGE_HEIGHT);
+    ctx.drawImage(colorComponent2cvs, IMAGE_WIDTH + 10, IMAGE_HEIGHT + 10, IMAGE_WIDTH, IMAGE_HEIGHT);
+    ctx.drawImage(colorComponent3cvs, IMAGE_WIDTH * 2 + 20, IMAGE_HEIGHT + 10, IMAGE_WIDTH, IMAGE_HEIGHT);
+    ctx.drawImage(histgram1cvs, 0, IMAGE_HEIGHT * 2 + 20, IMAGE_WIDTH, IMAGE_HEIGHT);
+    ctx.drawImage(histgram2cvs, IMAGE_WIDTH + 10, IMAGE_HEIGHT * 2 + 20, IMAGE_WIDTH, IMAGE_HEIGHT);
+    ctx.drawImage(histgram3cvs, IMAGE_WIDTH * 2 + 20, IMAGE_HEIGHT * 2 + 20, IMAGE_WIDTH, IMAGE_HEIGHT);
+
+    a.href = cvs.toDataURL('image/jpeg');
+    a.download = 'download.jpg';
+    a.click();
 }
 
 function openImageWindow(sx, sy, sw, sh, dx, dy, dw, dh) {
